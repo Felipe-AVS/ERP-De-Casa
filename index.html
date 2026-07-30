@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Minha Casa</title>
+
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <div id="login">
+
+
+        <h2>Acesso</h2>
+
+
+        <input type="password" id="senha" placeholder="Senha">
+
+
+        <button id="btnEntrar" type="button">
+
+            Entrar
+
+        </button>
+
+
+        <p id="erro"></p>
+
+
+    </div>
+
+
+
+
+
+    <div id="app" hidden>
+
+
+        <span style="display: flex; align-items: center; justify-content: space-between;">
+            <h1>🏠 Minha Casa</h1>
+
+            <button id="btnImprimir" class="btn-imprimir" type="button">
+                🖨️
+            </button>
+
+        </span>
+
+
+
+
+        <div class="abas">
+
+
+            <button id="btnCasa" type="button">
+                Tenho em casa
+            </button>
+
+
+            <button id="btnComprar" type="button">
+                Preciso comprar
+            </button>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <section id="casa">
+
+
+            <h2>Tenho em casa</h2>
+
+
+
+            <div class="form-item">
+
+
+                <input id="quantidadeCasa" type="number" placeholder="Qtd">
+
+
+
+                <input id="itemCasa" type="text" placeholder="Nome do item">
+
+
+
+                <button id="btnAddCasa" type="button">
+                    +
+                </button>
+
+
+
+            </div>
+
+
+
+
+            <ul id="listaCasa"></ul>
+
+
+
+        </section>
+
+
+
+
+
+
+
+
+
+        <section id="comprar" hidden>
+
+
+            <h2>Preciso comprar</h2>
+
+
+
+
+            <div class="form-item">
+
+
+
+                <input id="quantidadeComprar" type="number" placeholder="Qtd">
+
+
+
+
+                <input id="itemComprar" type="text" placeholder="Nome do item">
+
+
+
+
+
+                <button id="btnAddComprar" type="button">
+                    +
+                </button>
+
+
+
+
+            </div>
+
+
+
+
+
+            <ul id="listaComprar"></ul>
+
+
+
+
+        </section>
+
+
+
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/js-sha256@0.11.0/src/sha256.min.js"></script>
+    <script type="module" src="app.js?v=4"></script>
+
+
+</body>
+
+</html>
