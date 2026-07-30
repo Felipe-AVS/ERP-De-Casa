@@ -305,15 +305,17 @@ function render() {
         htmlCasa += `
 <details class="categoria">
 
-    <summary style="display:flex; justify-content:space-between; align-items:center;">
+    <summary>
 
+    <div class="titulo-categoria">
         📂 ${categoria}
+    </div>
 
-        <span style="background:#667eea; color:#fff; border-radius:999px; padding:4px 10px; font-size:13px; font-weight:bold;">
-            ${categoriasCasa[categoria].length}
-        </span>
+    <span>
+        ${categoriasCasa[categoria].length}
+    </span>
 
-    </summary>
+</summary>
 
     <ul class="lista-categoria">
 `;
