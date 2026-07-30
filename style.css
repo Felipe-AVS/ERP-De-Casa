@@ -755,4 +755,21 @@ details.categoria {
     visibility:visible !important;
     opacity:1 !important;
 }
+
+    .titulo-categoria {
+
+    flex:1;
+
+}
+
+
+details.categoria summary {
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
 }
