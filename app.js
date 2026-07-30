@@ -226,7 +226,13 @@ async function addItem(tipo) {
 
 
 
+    const categoria = tipo === "casa"
+        ? document.getElementById("categoriaCasa").value
+        : document.getElementById("categoriaComprar").value;
+
     dados[tipo].push({
+
+        categoria,
 
         quantidade,
 
@@ -271,173 +277,176 @@ async function addItem(tipo) {
 
 function render() {
 
+    const listaCasa = document.getElementById("listaCasa");
+    const listaComprar = document.getElementById("listaComprar");
 
-
-    const listaCasa =
-        document.getElementById("listaCasa");
-
-
-
-    const listaComprar =
-        document.getElementById("listaComprar");
-
-
-
-
-    listaCasa.innerHTML = "";
-
-    listaComprar.innerHTML = "";
-
-
-
-
-
-
-
-
+    // ==========================
     // CASA
+    // ==========================
 
-    dados.casa.forEach((item, index) => {
+    const categoriasCasa = {};
 
+    dados.casa.forEach(item => {
 
-        listaCasa.innerHTML += `
+        const categoria = item.categoria || "Sem categoria";
 
+        if (!categoriasCasa[categoria]) {
+            categoriasCasa[categoria] = [];
+        }
 
-        <li>
-
-            <div class="linha-item">
-
-
-                <span class="quantidade">
-
-                    ${item.quantidade}
-
-                </span>
-
-
-
-                <span class="nome-item">
-
-                    ${item.nome}
-
-                </span>
-
-
-
-
-                <button
-                class="btn-remover"
-                onclick="remover('casa',${index})">
-
-
-                    🗑
-
-
-                </button>
-
-
-
-            </div>
-
-
-        </li>
-
-
-        <hr>
-
-
-        `;
-
+        categoriasCasa[categoria].push(item);
 
     });
 
+    let htmlCasa = "";
 
+    Object.keys(categoriasCasa).sort().forEach(categoria => {
 
+        htmlCasa += `
+<details class="categoria">
 
+    <summary style="display:flex; justify-content:space-between; align-items:center;">
 
+        📂 ${categoria}
 
+        <span style="background:#667eea; color:#fff; border-radius:999px; padding:4px 10px; font-size:13px; font-weight:bold;">
+            ${categoriasCasa[categoria].length}
+        </span>
 
+    </summary>
 
+    <ul class="lista-categoria">
+`;
 
+        categoriasCasa[categoria].forEach(item => {
+
+            const index = dados.casa.indexOf(item);
+
+            htmlCasa += `
+
+<li>
+
+    <div class="linha-item">
+
+        <span class="quantidade">
+            ${item.quantidade}
+        </span>
+
+        <span class="nome-item">
+            ${item.nome}
+        </span>
+
+        <button
+            class="btn-remover"
+            onclick="remover('casa', ${index})">
+
+            🗑
+
+        </button>
+
+    </div>
+
+</li>
+
+`;
+
+        });
+
+        htmlCasa += `
+    </ul>
+
+</details>
+`;
+
+    });
+
+    listaCasa.innerHTML = htmlCasa;
+
+    // ==========================
     // COMPRAR
+    // ==========================
 
-    dados.comprar.forEach((item, index) => {
+    const categoriasComprar = {};
 
+    dados.comprar.forEach(item => {
 
-        listaComprar.innerHTML += `
+        const categoria = item.categoria || "Sem categoria";
 
+        if (!categoriasComprar[categoria]) {
+            categoriasComprar[categoria] = [];
+        }
 
-        <li>
-
-
-            <div class="linha-item">
-
-            <button
-
-                class="btn-remover"
-
-                onclick="remover('comprar',${index})">
-
-
-                    🗑
-
-
-                </button>
-
-
-                <span class="quantidade">
-
-                    ${item.quantidade}
-
-                </span>
-
-
-
-
-                <span class="nome-item ${item.feito ? "comprado" : ""}">
-
-                    ${item.nome}
-
-                </span>
-
-
-
-
-
-                <input
-
-                    class="check"
-
-                    type="checkbox"
-
-                    ${item.feito ? "checked" : ""}
-
-                    onchange="marcarCompra(${index})"
-
-                >
-
-
-
-
-
-                
-
-
-
-            </div>
-
-
-        </li>
-
-
-        <hr>
-
-
-        `;
-
+        categoriasComprar[categoria].push(item);
 
     });
 
+    let htmlComprar = "";
+
+    Object.keys(categoriasComprar).sort().forEach(categoria => {
+
+        htmlComprar += `
+<details class="categoria">
+
+    <summary>
+
+        🛒 ${categoria}
+
+        <span>${categoriasComprar[categoria].length}</span>
+
+    </summary>
+
+    <ul class="lista-categoria">
+`;
+
+        categoriasComprar[categoria].forEach(item => {
+
+            const index = dados.comprar.indexOf(item);
+
+            htmlComprar += `
+
+<li>
+
+    <div class="linha-item">
+
+        <span class="quantidade">
+            ${item.quantidade}
+        </span>
+
+        <span class="nome-item ${item.feito ? "comprado" : ""}">
+            ${item.nome}
+        </span>
+
+        <input
+            class="check"
+            type="checkbox"
+            ${item.feito ? "checked" : ""}
+            onchange="marcarCompra(${index})">
+
+        <button
+            class="btn-remover"
+            onclick="remover('comprar', ${index})">
+
+            🗑
+
+        </button>
+
+    </div>
+
+</li>
+
+`;
+
+        });
+
+        htmlComprar += `
+    </ul>
+
+</details>
+`;
+
+    });
+
+    listaComprar.innerHTML = htmlComprar;
 
 }
 
@@ -587,7 +596,25 @@ async function carregar() {
         dados.comprar = [];
 
 
+    dados.casa.forEach(item => {
 
+        if (!item.categoria) {
+
+            item.categoria = "Sem categoria";
+
+        }
+
+    });
+
+    dados.comprar.forEach(item => {
+
+        if (!item.categoria) {
+
+            item.categoria = "Sem categoria";
+
+        }
+
+    });
 
 
     render();
